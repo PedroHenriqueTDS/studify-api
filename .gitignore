@@ -1,29 +1,10 @@
-### Maven ###
-target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
-
-### IntelliJ IDEA ###
+# IntelliJ
 .idea/
-*.iws
 *.iml
-*.ipr
 
-### VS Code ###
-.vscode/
-
-### OS ###
-.DS_Store
-Thumbs.db
-
-### Environment ###
-.env
-!.env.example
-
-### Logs ###
+# Java
+target/
 *.log
-logs/
 
-### Spring Boot ###
-spring-boot-*.jar
+# Env
+.env
