@@ -1,0 +1,53 @@
+services:
+
+  # ── MySQL ──────────────────────────────────────────────────────────────────
+  mysql:
+    image: mysql:8.0
+    container_name: studify-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
+      MYSQL_DATABASE: studify_db
+      MYSQL_USER: ${MYSQL_USER:-studify}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-studify123}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-root}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - studify-network
+
+  # ── Spring Boot API ────────────────────────────────────────────────────────
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: studify-api
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      DB_URL: jdbc:mysql://mysql:3306/studify_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      DB_USERNAME: ${MYSQL_USER:-studify}
+      DB_PASSWORD: ${MYSQL_PASSWORD:-studify123}
+      JWT_SECRET: ${JWT_SECRET:-404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
+      DDL_AUTO: update
+      SHOW_SQL: "false"
+    ports:
+      - "8080:8080"
+    networks:
+      - studify-network
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  studify-network:
+    driver: bridge
