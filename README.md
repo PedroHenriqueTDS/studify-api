@@ -6,7 +6,14 @@
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.5-brightgreen?logo=springboot)](https://spring.io/projects/spring-boot)
 [![MySQL](https://img.shields.io/badge/MySQL-8.0-blue?logo=mysql)](https://www.mysql.com/)
 [![Docker](https://img.shields.io/badge/Docker-ready-blue?logo=docker)](https://www.docker.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)]
+## 📸 Preview
+
+### 🔹 Visão geral da API
+![Swagger Overview](docs/swagger-overview.png)
+
+### 🔹 Exemplo de requisição
+![Swagger Request](docs/swagger-request.png)
 
 ---
 
