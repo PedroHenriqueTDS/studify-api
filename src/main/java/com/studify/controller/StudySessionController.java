@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 @RequestMapping("/api/v1/study-sessions")
 @RequiredArgsConstructor
 @SecurityRequirement(name = "bearerAuth")
-@Tag(name = "⏱m Sessões de Estudo", description = "Registros de sessões de estudo")
+@Tag(name = "Sessões de Estudo", description = "Registros de sessões de estudo")
 public class StudySessionController {
 
     private final StudySessionService sessionService;
