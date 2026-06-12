@@ -30,6 +30,7 @@ public class SubjectService {
                 .name(request.name())
                 .description(request.description())
                 .color(request.color() != null ? request.color() : "#6366F1")
+                .maxAbsencePercentage(request.maxAbsencePercentage() != null ? request.maxAbsencePercentage() : 25)
                 .user(user)
                 .build();
 
@@ -55,6 +56,7 @@ public class SubjectService {
         if (request.name() != null) subject.setName(request.name());
         if (request.description() != null) subject.setDescription(request.description());
         if (request.color() != null) subject.setColor(request.color());
+        if (request.maxAbsencePercentage() != null) subject.setMaxAbsencePercentage(request.maxAbsencePercentage());
 
         return toResponse(subjectRepository.save(subject), user.getId());
     }
@@ -81,6 +83,7 @@ public class SubjectService {
                 subject.getColor(),
                 totalMinutes,
                 totalSessions,
+                subject.getMaxAbsencePercentage(),
                 subject.getCreatedAt()
         );
     }
