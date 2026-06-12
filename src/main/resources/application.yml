@@ -12,6 +12,10 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
         format_sql: true
+  servlet:
+    multipart:
+      max-file-size: 2MB
+      max-request-size: 2MB
 
 server:
   port: ${PORT:8080}
@@ -34,3 +38,8 @@ springdoc:
     title: Studify API
     description: API de Gerenciamento de Estudos
     version: 1.0.0
+
+studify:
+  upload:
+    dir: uploads/profile-pictures
+    base-url: http://localhost:8080/uploads/profile-pictures
