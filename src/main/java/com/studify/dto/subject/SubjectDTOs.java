@@ -1,5 +1,7 @@
 package com.studify.dto.subject;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -17,7 +19,11 @@ public class SubjectDTOs {
             String description,
 
             @Pattern(regexp = "^#([A-Fa-f0-9]{6})$", message = "Cor deve ser um HEX válido (ex: #6366F1)")
-            String color
+            String color,
+
+            @Min(value = 0, message = "Limite mínimo de faltas é 0%")
+            @Max(value = 100, message = "Limite máximo de faltas é 100%")
+            Integer maxAbsencePercentage
     ) {}
 
     public record UpdateRequest(
@@ -28,7 +34,11 @@ public class SubjectDTOs {
             String description,
 
             @Pattern(regexp = "^#([A-Fa-f0-9]{6})$", message = "Cor deve ser um HEX válido")
-            String color
+            String color,
+
+            @Min(value = 0, message = "Limite mínimo de faltas é 0%")
+            @Max(value = 100, message = "Limite máximo de faltas é 100%")
+            Integer maxAbsencePercentage
     ) {}
 
     public record Response(
@@ -38,6 +48,7 @@ public class SubjectDTOs {
             String color,
             Integer totalStudyMinutes,
             Long totalSessions,
+            Integer maxAbsencePercentage,
             LocalDateTime createdAt
     ) {}
 
