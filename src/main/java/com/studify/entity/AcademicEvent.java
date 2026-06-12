@@ -4,50 +4,55 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
-@Table(name = "subjects")
+@Table(name = "academic_events")
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Subject {
+public class AcademicEvent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private String title;
 
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column(length = 7)
-    @Builder.Default
-    private String color = "#6366F1";
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 30)
+    private EventType type;
 
-    @Column(name = "max_absence_percentage", nullable = false)
-    @Builder.Default
-    private Integer maxAbsencePercentage = 25;
+    @Column(name = "start_date_time", nullable = false)
+    private LocalDateTime startDateTime;
+
+    @Column(name = "end_date_time")
+    private LocalDateTime endDateTime;
+
+    @Column(length = 255)
+    private String location;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "subject_id")
+    private Subject subject;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-
-    @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
-    private List<StudySession> studySessions;
-
-    @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
-    private List<Task> tasks;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
 
     @PrePersist
     protected void onCreate() {
@@ -58,5 +63,9 @@ public class Subject {
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
+    }
+
+    public enum EventType {
+        EXAM, ASSIGNMENT, PRESENTATION, REMINDER, OTHER
     }
 }

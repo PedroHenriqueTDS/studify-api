@@ -32,6 +32,22 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    @Builder.Default
+    private String timezone = "America/Sao_Paulo";
+
+    @Column(name = "profile_picture", length = 512)
+    private String profilePicture;
+
+    @Column(length = 150)
+    private String course;
+
+    @Column(length = 150)
+    private String institution;
+
+    @Column
+    private Integer semester;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @Builder.Default

@@ -4,50 +4,45 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
-@Table(name = "subjects")
+@Table(name = "grade_records")
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Subject {
+public class GradeRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String name;
-
-    @Column(columnDefinition = "TEXT")
-    private String description;
-
-    @Column(length = 7)
-    @Builder.Default
-    private String color = "#6366F1";
-
-    @Column(name = "max_absence_percentage", nullable = false)
-    @Builder.Default
-    private Integer maxAbsencePercentage = 25;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "grade_goal_id", nullable = false)
+    private GradeGoal gradeGoal;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
-    private List<StudySession> studySessions;
+    @Column(nullable = false, length = 100)
+    private String title;
 
-    @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
-    private List<Task> tasks;
+    @Column(nullable = false)
+    private Double grade;
+
+    @Column(nullable = false)
+    private Double weight;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
 
     @PrePersist
     protected void onCreate() {
